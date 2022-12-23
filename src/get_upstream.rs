@@ -1,9 +1,8 @@
-use std::{
-    collections::HashMap,
-    process::{self, Command, Output},
-};
+use std::process::{Command, Output};
 
 use regex::Regex;
+use reqwest::header::USER_AGENT;
+extern crate serde_json;
 
 pub async fn run(name: &str) {
     println!("the upstream name is {name}");
@@ -14,7 +13,6 @@ pub async fn run(name: &str) {
             .output()
             .unwrap(),
     );
-    println!("upstream_url is {upstream_url}");
     if upstream_url.trim().len() > 0 {
         eprintln!("`{name}` has existed, please check or input a new name");
     } else {
@@ -26,7 +24,7 @@ pub async fn run(name: &str) {
                 .unwrap(),
         );
         let user_repo = get_user_repo(&origin_remote);
-        get_repo_meta_info(&user_repo).await;
+        get_repo_meta_info(&user_repo, name).await;
     }
 }
 
@@ -44,13 +42,44 @@ fn get_stdout(output: &Output) -> String {
         .to_string();
 }
 
-async fn get_repo_meta_info(user_repo: &str) -> Result<(), Box<dyn std::error::Error>> {
-    println!("enter req, {}", user_repo);
-    let res = reqwest::get(format!("https://api.github.com/repos/{}", user_repo))
-        .await?
-        .json::<HashMap<String, String>>()
+async fn get_repo_meta_info(
+    user_repo: &str,
+    upstream_name: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let req_client = reqwest::Client::new();
+    let res = req_client
+        .get(format!(
+            "https://api.github.com/repos/{}",
+            "HomyeeKing/rust"
+        ))
+        .header(USER_AGENT, "GX")
+        .send()
         .await?;
-    dbg!(res);
+    if res.status().is_success() {
+        println!("success");
+        let body = res.json::<serde_json::Value>().await?;
+        let is_forked = serde_json::from_value(body.get("fork").unwrap().to_owned()).unwrap();
+        if is_forked {
+            let parent_ssh_url: String = serde_json::from_value(
+                body.get("parent")
+                    .unwrap()
+                    .get("ssh_url")
+                    .unwrap()
+                    .to_owned(),
+            )
+            .unwrap();
+            Command::new("git").args(["remote", "add", upstream_name, &parent_ssh_url]);
+            println!("ADD UPSTREAM SUCCESSFULLY. CHECK THE GIT REMOTE");
+            println!(
+                "{:?}",
+                get_stdout(&Command::new("git").args(["remote", "-v"]).output().unwrap())
+            )
+        } else {
+            println!("{} is not a forked repo.", user_repo);
+        }
+    } else {
+        println!("Something else happened. Status: {:?}", res.status());
+    }
     Ok(())
 }
 #[cfg(test)]
