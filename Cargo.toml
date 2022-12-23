@@ -2,7 +2,14 @@
 name = "gx"
 version = "0.1.0"
 edition = "2021"
-
+description = "A tool to expand the ability of git"
+authors = ["HomyeeKing <HomyeeKing@gmail.com>"]
+repository = "https://github.com/HomyeeKing/gx"
+homepage = "https://github.com/HomyeeKing/gx"
+keywords = ["git", "cli"]
+readme = "README.md"
+license = "MIT"
+categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
