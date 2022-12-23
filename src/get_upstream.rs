@@ -1,11 +1,11 @@
 use std::process::{Command, Output};
 
+use colored::Colorize;
 use regex::Regex;
 use reqwest::header::USER_AGENT;
 extern crate serde_json;
 
 pub async fn run(name: &str) {
-    println!("the upstream name is {name}");
     // detect whether given upstream name exists
     let upstream_url = get_stdout(
         &Command::new("git")
@@ -16,7 +16,7 @@ pub async fn run(name: &str) {
     if upstream_url.trim().len() > 0 {
         eprintln!("`{name}` has existed, please check or input a new name");
     } else {
-        println!("Ready to get upstream");
+        println!("{}", format!("🔨 Ready to get upstream").yellow());
         let origin_remote = get_stdout(
             &Command::new("git")
                 .args(["remote", "get-url", "origin"])
@@ -24,7 +24,8 @@ pub async fn run(name: &str) {
                 .unwrap(),
         );
         let user_repo = get_user_repo(&origin_remote);
-        get_repo_meta_info(&user_repo, name).await;
+        get_repo_meta_info(&user_repo, name).await.expect(
+          "Generate upstream info failed! Please fill an issue at https://github.com/HomyeeKing/gito/issues");
     }
 }
 
@@ -48,15 +49,11 @@ async fn get_repo_meta_info(
 ) -> Result<(), Box<dyn std::error::Error>> {
     let req_client = reqwest::Client::new();
     let res = req_client
-        .get(format!(
-            "https://api.github.com/repos/{}",
-            "HomyeeKing/rust"
-        ))
+        .get(format!("https://api.github.com/repos/{}", user_repo))
         .header(USER_AGENT, "GX")
         .send()
         .await?;
     if res.status().is_success() {
-        println!("success");
         let body = res.json::<serde_json::Value>().await?;
         let is_forked = serde_json::from_value(body.get("fork").unwrap().to_owned()).unwrap();
         if is_forked {
@@ -68,12 +65,23 @@ async fn get_repo_meta_info(
                     .to_owned(),
             )
             .unwrap();
-            Command::new("git").args(["remote", "add", upstream_name, &parent_ssh_url]);
-            println!("ADD UPSTREAM SUCCESSFULLY. CHECK THE GIT REMOTE");
+
+            Command::new("git")
+                .args(["remote", "add", upstream_name, &parent_ssh_url])
+                .spawn()
+                .expect("set upstream url failed")
+                .wait()
+                .expect("set upstream url failed");
+
             println!(
-                "{:?}",
-                get_stdout(&Command::new("git").args(["remote", "-v"]).output().unwrap())
-            )
+                "{}",
+                format!("✅ ADD UPSTREAM SUCCESSFULLY. THE LATEST REMOTES ARE:").green()
+            );
+
+            Command::new("git")
+                .args(["remote", "-v"])
+                .spawn()
+                .expect("check latest git remote failed");
         } else {
             println!("{} is not a forked repo.", user_repo);
         }
