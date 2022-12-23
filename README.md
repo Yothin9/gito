@@ -1,6 +1,9 @@
 # gito
 A CLI to expand the ability of `git`.
 
+# install
+`cargo install gito`
+
 # Commands
 
 ## gito get-upstream
