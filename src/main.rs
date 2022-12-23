@@ -3,7 +3,7 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(name = "gito")]
-#[command(about="Git command enhancement CLI", long_about = None)]
+#[command(about="Git command enhancement CLI", long_about = None, version)]
 pub struct Cli {
     #[command(subcommand)]
     command: Commands,
