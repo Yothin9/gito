@@ -1,4 +1,4 @@
-# gx
+# gito
 A CLI to expand the ability of `git`.
 
 # args
@@ -7,7 +7,7 @@ A CLI to expand the ability of `git`.
 auto set the upstream ssh-url is the repo is forked.
 
 ```bash
-gx gup --remote-name [name] # default is `upstream`
+gito gup --remote-name [name] # default is `upstream`
 ```
 
 

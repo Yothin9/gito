@@ -215,7 +215,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gx"
+name = "gito"
 version = "0.1.0"
 dependencies = [
  "clap",

@@ -2,7 +2,7 @@ pub mod get_upstream;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "gx")]
+#[command(name = "gito")]
 #[command(about="Git command enhancement CLI", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
