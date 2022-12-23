@@ -1,14 +1,18 @@
 # gito
 A CLI to expand the ability of `git`.
 
-# args
+# Commands
 
-## get-upstream (alias: gup)
-auto set the upstream ssh-url is the repo is forked.
+## gito get-upstream
+or `gito gup`  to auto set the upstream ssh-url if the repo is forked:
 
+w/ options:
 ```bash
-gito gup --remote-name [name] # default is `upstream`
+--remote-name [name] # default is `upstream`
 ```
+
+
+
 
 
 
