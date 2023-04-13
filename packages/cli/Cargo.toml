@@ -19,3 +19,4 @@ tokio = { version = "1", features = ["full"] }
 regex = "1"
 serde_json = "1.0.91"
 colored = "2.0.0"
+gito_core = {path = "../core"}

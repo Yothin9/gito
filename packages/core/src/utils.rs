@@ -1,3 +1,6 @@
+use std::process::Output;
+use regex::Regex;
+
 pub fn set_panic_hook() {
     // When the `console_error_panic_hook` feature is enabled, we can call the
     // `set_panic_hook` function at least once during initialization, and then
@@ -7,4 +10,18 @@ pub fn set_panic_hook() {
     // https://github.com/rustwasm/console_error_panic_hook#readme
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
+}
+
+pub fn get_stdout(output: &Output) -> String {
+    return (String::from_utf8(output.stdout.clone())).unwrap().trim().to_string();
+}
+
+/**
+ * git@github.com:HomyeeKing/gito.git -> HomyeeKing/gito
+ */
+pub fn get_user_repo(remote_url: &str) -> String {
+  // r means raw string https://doc.rust-lang.org/stable/reference/tokens.html#raw-string-literals
+  let re: Regex = Regex::new(r"^git@github\.com:(.*)\.git$").unwrap();
+  let caps = re.captures(remote_url).unwrap();
+  return caps[1].to_string();
 }

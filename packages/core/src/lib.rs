@@ -1,4 +1,7 @@
-mod utils;
+pub mod utils;
+pub use utils::*;
+
+use std::process::Command;
 
 use wasm_bindgen::prelude::*;
 
@@ -7,13 +10,24 @@ use wasm_bindgen::prelude::*;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 #[wasm_bindgen]
-extern {
-    fn alert(s: &str);
+#[allow(dead_code)]
+pub struct GitInfo {
+    ssh_url: String,
+    user_repo: String,
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, core!");
+pub fn get_git_info() -> GitInfo {
+    let ssh_url = get_stdout(
+        &Command::new("git")
+            .args(["remote", "get-url", "origin"])
+            .output()
+            .unwrap(),
+    );
+
+    GitInfo {
+        user_repo: get_user_repo(&ssh_url),
+        ssh_url,
+    }
 }

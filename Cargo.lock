@@ -318,6 +318,7 @@ version = "0.1.3"
 dependencies = [
  "clap",
  "colored",
+ "gito_core",
  "regex",
  "reqwest",
  "serde_json",
@@ -325,10 +326,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "gito-core"
+name = "gito_core"
 version = "1.0.0"
 dependencies = [
  "console_error_panic_hook",
+ "regex",
  "wasm-bindgen",
  "wasm-bindgen-test",
  "wee_alloc",
