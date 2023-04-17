@@ -14,7 +14,7 @@ pub fn run(alias: &str) {
             format!(r#"'{git_name} <{git_email}>'"#).as_str(),
             "--no-edit",
         ]);
-        run_git(vec!["rebase", "--continue"]);
+        // run_git(vec!["rebase", "--continue"]);
         println!("the commit has been amend with {} {}", git_name, git_email);
     } else {
         println!("Invalid alias");
