@@ -2,11 +2,22 @@
 pub mod add {
     use crate::constants::*;
     use ini::Ini;
-    pub fn run(name: &str, email: &str, alias: &str) {
+    pub fn run(alias: &str, name: &str, email: &str) {
         let mut config = Ini::load_from_file(get_git_account_file()).unwrap();
-        config.set_to(Some(alias), name.to_string(), email.to_string());
+        config.set_to(Some(alias), "name".to_string(), name.to_string());
+        config.set_to(Some(alias), "email".to_string(), email.to_string());
         config.write_to_file(get_git_account_file()).unwrap();
         println!("Add {alias} successfully");
+    }
+}
+pub mod del {
+    use crate::constants::*;
+    use ini::Ini;
+    pub fn run(alias: &str) {
+        let mut config = Ini::load_from_file(get_git_account_file()).unwrap();
+        config.delete(Some(alias));
+        config.write_to_file(get_git_account_file()).unwrap();
+        println!("Delete {alias} successfully");
     }
 }
 

@@ -39,10 +39,15 @@ enum UserCmd {
     },
     #[command(about = "add git user")]
     Add {
+        /// alias for this account
+        alias: String,
         /// git user
         name: String,
         /// git email
         email: String,
+    },
+    #[command(about = "delete git user by alias")]
+    Del {
         /// alias for this account
         alias: String,
     },
@@ -59,10 +64,11 @@ async fn main() {
             UserCmd::List => {
                 user_command::list::run();
             }
-            UserCmd::Add { name, email, alias } => {
-                user_command::add::run(&name, &email, &alias);
+            UserCmd::Add { alias, name, email } => {
+                user_command::add::run(&alias, &name, &email);
             }
             UserCmd::Use { alias } => user_command::use_user::run(&alias),
+            UserCmd::Del { alias } => user_command::del::run(&alias),
         },
     }
 }
