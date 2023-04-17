@@ -1,9 +1,8 @@
 // TODO: seprate file
 pub mod add {
-    use crate::constants::*;
-    use ini::Ini;
+    use crate::{constants::*, utils::safe_get_git_account};
     pub fn run(alias: &str, name: &str, email: &str) {
-        let mut config = Ini::load_from_file(get_git_account_file()).unwrap();
+        let mut config = safe_get_git_account();
         config.set_to(Some(alias), "name".to_string(), name.to_string());
         config.set_to(Some(alias), "email".to_string(), email.to_string());
         config.write_to_file(get_git_account_file()).unwrap();
@@ -11,10 +10,9 @@ pub mod add {
     }
 }
 pub mod del {
-    use crate::constants::*;
-    use ini::Ini;
+    use crate::{constants::*, utils::safe_get_git_account};
     pub fn run(alias: &str) {
-        let mut config = Ini::load_from_file(get_git_account_file()).unwrap();
+        let mut config = safe_get_git_account();
         config.delete(Some(alias));
         config.write_to_file(get_git_account_file()).unwrap();
         println!("Delete {alias} successfully");
@@ -22,15 +20,13 @@ pub mod del {
 }
 
 pub mod list {
-    use std::vec;
-
-    use crate::constants::get_git_account_file;
-    use ini::Ini;
+    use crate::utils::safe_get_git_account;
     use prettytable::{row, Cell, Row, Table};
+    use std::vec;
     pub fn run() {
         let mut git_account_table = Table::new();
         git_account_table.add_row(row!["alias", "name", "email"]);
-        let i = Ini::load_from_file(get_git_account_file()).unwrap();
+        let i = safe_get_git_account();
         for (sec, prop) in i.iter() {
             let mut group: Vec<Cell> = vec![];
             group.push(Cell::new(sec.unwrap_or_default()));
@@ -45,11 +41,9 @@ pub mod list {
 }
 
 pub mod use_user {
-    use crate::constants::*;
     use crate::utils::*;
-    use ini::Ini;
     pub fn run(alias: &str, is_global: bool) {
-        let git_accounts = Ini::load_from_file(get_git_account_file()).unwrap();
+        let git_accounts = safe_get_git_account();
         if git_accounts.section(Some(alias)).is_some() {
             let account = git_accounts.section(Some(alias)).unwrap();
             let git_name = account.get("name").unwrap_or_default();

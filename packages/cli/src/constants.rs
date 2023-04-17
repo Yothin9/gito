@@ -8,6 +8,6 @@ pub fn get_home_dir() -> PathBuf {
 }
 
 pub fn get_git_account_file() -> PathBuf {
-    const ACCOUNT_FILE: &str = ".git-account1";
+    const ACCOUNT_FILE: &str = ".gito-account";
     get_home_dir().join(ACCOUNT_FILE)
 }

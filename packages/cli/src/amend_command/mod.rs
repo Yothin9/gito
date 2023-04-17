@@ -1,7 +1,6 @@
-use crate::{constants::get_git_account_file, utils::*};
-use ini::Ini;
+use crate::utils::*;
 pub fn run(alias: &str) {
-    let git_accounts = Ini::load_from_file(get_git_account_file()).unwrap();
+    let git_accounts = safe_get_git_account();
     if git_accounts.section(Some(alias)).is_some() {
         let account = git_accounts.section(Some(alias)).unwrap();
         let git_name = account.get("name").unwrap_or_default();
