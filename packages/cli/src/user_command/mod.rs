@@ -3,11 +3,9 @@ pub mod add {
     use crate::constants::*;
     use ini::Ini;
     pub fn run(name: &str, email: &str, alias: &str) {
-        let mut user = Ini::new();
-        user.with_section(Some(alias))
-            .set("name", name)
-            .set("email", email);
-        user.write_to_file(get_git_account_file()).unwrap();
+        let mut config = Ini::load_from_file(get_git_account_file()).unwrap();
+        config.set_to(Some(alias), name.to_string(), email.to_string());
+        config.write_to_file(get_git_account_file()).unwrap();
         println!("Add {alias} successfully");
     }
 }
