@@ -43,6 +43,8 @@ enum UserCmd {
     Use {
         /// alias
         alias: String,
+        #[arg(short = 'g', default_value = "false", help = "set git user locally and globally")]
+        global: bool,
     },
     #[command(about = "add git user")]
     Add {
@@ -74,7 +76,7 @@ async fn main() {
             UserCmd::Add { alias, name, email } => {
                 user_command::add::run(&alias, &name, &email);
             }
-            UserCmd::Use { alias } => user_command::use_user::run(&alias),
+            UserCmd::Use { alias, global } => user_command::use_user::run(&alias, global),
             UserCmd::Del { alias } => user_command::del::run(&alias),
         },
         Commands::Amend { alias } => amend_command::run(&alias),
