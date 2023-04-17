@@ -61,7 +61,7 @@ pub mod use_user {
                 run_git(vec!["config", "--global", "user.name", git_name]);
                 run_git(vec!["config", "--global", "user.email", git_email]);
             }
-            println!("git account has been reset to {} {}", git_name, git_email);
+            println!("git account now is {} {}", git_name, git_email);
         } else {
             println!("Invalid alias");
         }

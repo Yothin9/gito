@@ -3,6 +3,7 @@ mod utils;
 //  command
 mod amend_command;
 mod get_upstream;
+mod init_command;
 mod user_command;
 // extern
 use clap::{Args, Parser, Subcommand};
@@ -27,6 +28,10 @@ enum Commands {
     Amend {
         alias: String,
     },
+    #[command(about = "git init with specific user info by alias")]
+    Init {
+        alias: String,
+    },
 }
 
 #[derive(Debug, Args)]
@@ -43,7 +48,11 @@ enum UserCmd {
     Use {
         /// alias
         alias: String,
-        #[arg(short = 'g', default_value = "false", help = "set git user locally and globally")]
+        #[arg(
+            short = 'g',
+            default_value = "false",
+            help = "set git user locally and globally"
+        )]
         global: bool,
     },
     #[command(about = "add git user")]
@@ -80,5 +89,6 @@ async fn main() {
             UserCmd::Del { alias } => user_command::del::run(&alias),
         },
         Commands::Amend { alias } => amend_command::run(&alias),
+        Commands::Init { alias } => init_command::run(&alias),
     }
 }

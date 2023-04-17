@@ -17,7 +17,7 @@ pub fn run(alias: &str) {
         if amend_status.status.success() {
             run_git(vec!["rebase", "--continue"]);
         } else {
-            println!("gito amend failed, please retry or report at https://github.com/HomyeeKing/gito/issues")
+            bug_report("gito amend");
         }
         println!("the commit has been amend with {} {}", git_name, git_email);
     } else {

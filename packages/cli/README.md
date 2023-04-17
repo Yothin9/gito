@@ -62,3 +62,11 @@ gito ammend github
 # git commit --amend --author 'HomyeeKing <HomyeeKing@gmail.com>' --no-edit
 #git rebase --continue #
 ```
+
+## init
+
+git init with specific user info by alias
+
+```bash
+gito init github
+```
