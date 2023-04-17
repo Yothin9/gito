@@ -8,11 +8,13 @@ pub fn run(alias: &str) {
         let git_email = account.get("email").unwrap_or_default();
 
         run_git(vec![
-            "commit --amend --author",
-            format!(r#"'{git_name} <{git_email}>'"#).as_str(),
+            "commit",
+            "--amend",
+            "--author",
             "--no-edit",
+            format!(r#"'{git_name} <{git_email}>'"#).as_str(),
         ]);
-        run_git(vec!["rebase --continue"]);
+        run_git(vec!["rebase", "--continue"]);
         println!("the commit has been amend with {} {}", git_name, git_email);
     } else {
         println!("Invalid alias");
