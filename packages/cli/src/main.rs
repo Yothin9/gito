@@ -51,7 +51,7 @@ async fn main() {
         }
         Commands::User(user) => match user.command {
             UserCmd::List => {
-                println!("in list ");
+                user_command::list::run();
             }
             UserCmd::Add { name, email, alias } => {
                 user_command::add::run(&name, &email, &alias);
