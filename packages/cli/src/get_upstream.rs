@@ -1,16 +1,9 @@
 use colored::Colorize;
 use gito_core::utils::*;
 use reqwest::header::USER_AGENT;
-use std::process::{Command, Output};
+use std::process::Command;
+use crate::utils::*;
 extern crate serde_json;
-
-fn run_command(program: &str, args: Vec<&str>) -> Output {
-    Command::new(program).args(args).output().unwrap()
-}
-
-fn run_git(args: Vec<&str>) -> Output {
-    run_command("git", args)
-}
 
 pub async fn run(name: &str) {
     // detect whether given upstream name exists
@@ -19,7 +12,7 @@ pub async fn run(name: &str) {
         eprintln!("`{name}` has existed, please check or input a new name");
     } else {
         println!("{}", format!("🔨 Ready to get upstream").yellow());
-        let origin_remote = get_stdout(&run_git(vec!["remote", "get-url", "origin"]) );
+        let origin_remote = get_stdout(&run_git(vec!["remote", "get-url", "origin"]));
         let user_repo = get_user_repo(&origin_remote);
         get_repo_meta_info(&user_repo, name).await.expect(
           "Generate upstream info failed! Please fill an issue at https://github.com/HomyeeKing/gito/issues");

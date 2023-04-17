@@ -1,6 +1,7 @@
 mod constants;
 mod get_upstream;
 mod user_command;
+mod utils;
 use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
@@ -31,6 +32,11 @@ struct UserArgs {
 enum UserCmd {
     #[command(about = "list all git users", alias = "ls")]
     List,
+    #[command(about = "change local git user by alias")]
+    Use {
+        /// alias
+        alias: String,
+    },
     #[command(about = "add git user")]
     Add {
         /// git user
@@ -56,6 +62,7 @@ async fn main() {
             UserCmd::Add { name, email, alias } => {
                 user_command::add::run(&name, &email, &alias);
             }
+            UserCmd::Use { alias } => user_command::use_user::run(&alias),
         },
     }
 }
