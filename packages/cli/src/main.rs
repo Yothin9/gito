@@ -1,7 +1,10 @@
 mod constants;
+mod utils;
+//  command
+mod amend_command;
 mod get_upstream;
 mod user_command;
-mod utils;
+// extern
 use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
@@ -20,6 +23,10 @@ enum Commands {
         remote_name: String,
     },
     User(UserArgs),
+    #[command(about = "amend the commit's author and email by alias")]
+    Amend {
+        alias: String,
+    },
 }
 
 #[derive(Debug, Args)]
@@ -70,5 +77,6 @@ async fn main() {
             UserCmd::Use { alias } => user_command::use_user::run(&alias),
             UserCmd::Del { alias } => user_command::del::run(&alias),
         },
+        Commands::Amend { alias } => amend_command::run(&alias),
     }
 }
