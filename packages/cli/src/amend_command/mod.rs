@@ -8,8 +8,9 @@ pub fn run(alias: &str) {
         let git_email = account.get("email").unwrap_or_default();
 
         run_git(vec![
-            "commit --amend --author --no-edit",
+            "commit --amend --author",
             format!(r#"'{git_name} <{git_email}>'"#).as_str(),
+            "--no-edit",
         ]);
         run_git(vec!["rebase --continue"]);
         println!("the commit has been amend with {} {}", git_name, git_email);
