@@ -23,6 +23,7 @@ enum Commands {
         #[arg(short = 'n', long = "remote-name", default_value = "upstream")]
         remote_name: String,
     },
+    #[command(about = "git account management")]
     User(UserArgs),
     #[command(about = "amend the commit's author and email by alias")]
     Amend {
