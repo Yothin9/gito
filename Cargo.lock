@@ -410,8 +410,6 @@ version = "1.0.0"
 dependencies = [
  "console_error_panic_hook",
  "regex",
- "reqwest",
- "serde_json",
  "tokio",
  "wasm-bindgen",
  "wasm-bindgen-futures",
