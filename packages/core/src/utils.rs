@@ -1,4 +1,4 @@
-use std::process::Output;
+pub use std::process::{Output, Command};
 use regex::Regex;
 
 pub fn set_panic_hook() {
@@ -24,4 +24,12 @@ pub fn get_user_repo(remote_url: &str) -> String {
   let re: Regex = Regex::new(r"^git@github\.com:(.*)\.git$").unwrap();
   let caps = re.captures(remote_url).unwrap();
   return caps[1].to_string();
+}
+
+pub fn run_command(program: &str, args: Vec<&str>) -> Output {
+  Command::new(program).args(args).output().unwrap()
+}
+
+pub fn run_git(args: Vec<&str>) -> Output {
+  run_command("git", args)
 }

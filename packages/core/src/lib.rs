@@ -13,6 +13,8 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[wasm_bindgen]
 #[allow(dead_code)]
 pub struct GitInfo {
+    // username:String,
+    // email:String,
     ssh_url: String,
     user_repo: String,
 }
