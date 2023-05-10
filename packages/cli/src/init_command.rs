@@ -1,7 +1,6 @@
-use crate::{
-    user_command,
-    utils::{bug_report, run_git},
-};
+use crate::{user_command, utils::bug_report};
+
+use gito_core::utils::run_git;
 
 pub fn run(alias: &str) {
     let git_init = run_git(vec!["init"]);

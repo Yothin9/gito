@@ -1,16 +1,6 @@
-use std::process::{Command, Output};
-
 use ini::Ini;
 
 use crate::constants::get_git_account_file;
-
-pub fn run_command(program: &str, args: Vec<&str>) -> Output {
-    Command::new(program).args(args).output().unwrap()
-}
-
-pub fn run_git(args: Vec<&str>) -> Output {
-    run_command("git", args)
-}
 
 pub fn bug_report(command: &str) {
     println!(

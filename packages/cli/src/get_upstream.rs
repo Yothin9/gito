@@ -1,8 +1,7 @@
 use colored::Colorize;
-use gito_core::utils::*;
+use gito_core::utils::{get_stdout, get_user_repo, run_git};
 use reqwest::header::USER_AGENT;
 use std::process::Command;
-use crate::utils::*;
 extern crate serde_json;
 
 pub async fn run(name: &str) {

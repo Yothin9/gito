@@ -1,4 +1,6 @@
 use crate::utils::*;
+use gito_core::utils::run_git;
+
 pub fn run(alias: &str) {
     let git_accounts = safe_get_git_account();
     if git_accounts.section(Some(alias)).is_some() {
