@@ -1,8 +1,6 @@
 pub mod utils;
 pub use utils::*;
 
-use std::process::Command;
-
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -12,24 +10,26 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[wasm_bindgen]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub struct GitInfo {
-    // username:String,
-    // email:String,
+    username:String,
+    email:String,
     ssh_url: String,
     user_repo: String,
 }
 
 #[wasm_bindgen]
-pub fn get_git_info() -> GitInfo {
-    let ssh_url = get_stdout(
-        &Command::new("git")
-            .args(["remote", "get-url", "origin"])
-            .output()
-            .unwrap(),
+pub async fn get_git_info() -> GitInfo {
+    let (ssh_url, username, email) = tokio::join!(
+        run_git_async(vec!["config", "remote.origin.url"]),
+        run_git_async(vec!["config", "user.name"]),
+        run_git_async(vec!["config", "user.email"])
     );
-
+    println!("{}",ssh_url);
     GitInfo {
-        user_repo: get_user_repo(&ssh_url),
-        ssh_url,
-    }
+      user_repo: get_user_repo(&ssh_url),
+      ssh_url,
+      username,
+      email
+  }
 }

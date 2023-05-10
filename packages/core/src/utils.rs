@@ -1,5 +1,8 @@
-pub use std::process::{Output, Command};
+use std::process::Command;
+pub use std::{process::Output};
+
 use regex::Regex;
+use tokio::process::Command as CommandAsync;
 
 pub fn set_panic_hook() {
     // When the `console_error_panic_hook` feature is enabled, we can call the
@@ -13,17 +16,17 @@ pub fn set_panic_hook() {
 }
 
 pub fn get_stdout(output: &Output) -> String {
-    return (String::from_utf8(output.stdout.clone())).unwrap().trim().to_string();
+    return (String::from_utf8_lossy(&output.stdout)).trim().to_string();
 }
 
 /**
  * git@github.com:HomyeeKing/gito.git -> HomyeeKing/gito
  */
 pub fn get_user_repo(remote_url: &str) -> String {
-  // r means raw string https://doc.rust-lang.org/stable/reference/tokens.html#raw-string-literals
-  let re: Regex = Regex::new(r"^git@github\.com:(.*)\.git$").unwrap();
-  let caps = re.captures(remote_url).unwrap();
-  return caps[1].to_string();
+    // r means raw string https://doc.rust-lang.org/stable/reference/tokens.html#raw-string-literals
+    let re: Regex = Regex::new(r"^git@github\.com:(.*)\.git$").unwrap();
+    let caps = re.captures(remote_url).unwrap();
+    return caps[1].to_string();
 }
 
 pub fn run_command(program: &str, args: Vec<&str>) -> Output {
@@ -32,4 +35,13 @@ pub fn run_command(program: &str, args: Vec<&str>) -> Output {
 
 pub fn run_git(args: Vec<&str>) -> Output {
   run_command("git", args)
+}
+
+pub async fn run_command_async(program: &str, args: Vec<&str>) -> String {
+    let output = CommandAsync::new(program).args(args).output().await;
+    get_stdout(&output.unwrap())
+}
+
+pub async fn run_git_async(args: Vec<&str>) -> String {
+    run_command_async("git", args).await
 }

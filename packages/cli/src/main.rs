@@ -7,6 +7,7 @@ mod init_command;
 mod user_command;
 // extern
 use clap::{Args, Parser, Subcommand};
+use gito_core::get_git_info;
 
 #[derive(Parser)]
 #[command(name = "gito")]
@@ -74,6 +75,7 @@ enum UserCmd {
 
 #[tokio::main]
 async fn main() {
+  println!("{:?}",get_git_info().await);
     let args = Cli::parse();
     match args.command {
         Commands::GetUpstream { remote_name } => {
