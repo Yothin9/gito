@@ -8,7 +8,7 @@ use wasm_bindgen::prelude::*;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-#[wasm_bindgen]
+#[wasm_bindgen(getter_with_clone)]
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct GitInfo {
