@@ -7,6 +7,7 @@ mod init_command;
 mod user_command;
 // extern
 use clap::{Args, Parser, Subcommand};
+use gito_core::get_git_info;
 
 #[derive(Parser)]
 #[command(name = "gito")]
@@ -26,13 +27,9 @@ enum Commands {
     #[command(about = "git account management")]
     User(UserArgs),
     #[command(about = "amend the commit's author and email by alias")]
-    Amend {
-        alias: String,
-    },
+    Amend { alias: String },
     #[command(about = "git init with specific user info by alias")]
-    Init {
-        alias: String,
-    },
+    Init { alias: String },
 }
 
 #[derive(Debug, Args)]
@@ -74,10 +71,11 @@ enum UserCmd {
 
 #[tokio::main]
 async fn main() {
+    let git_info = get_git_info();
     let args = Cli::parse();
     match args.command {
         Commands::GetUpstream { remote_name } => {
-            get_upstream::run(&remote_name).await;
+            get_upstream::run(&remote_name, &git_info).await;
         }
         Commands::User(user) => match user.command {
             UserCmd::List => {
