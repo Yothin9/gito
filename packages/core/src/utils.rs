@@ -1,8 +1,7 @@
 use std::process::Command;
-pub use std::{process::Output};
+pub use std::process::Output;
 
 use regex::Regex;
-use tokio::process::Command as CommandAsync;
 
 pub fn set_panic_hook() {
     // When the `console_error_panic_hook` feature is enabled, we can call the
@@ -30,18 +29,9 @@ pub fn get_user_repo(remote_url: &str) -> String {
 }
 
 pub fn run_command(program: &str, args: Vec<&str>) -> Output {
-  Command::new(program).args(args).output().unwrap()
+    Command::new(program).args(args).output().unwrap()
 }
 
 pub fn run_git(args: Vec<&str>) -> Output {
-  run_command("git", args)
-}
-
-pub async fn run_command_async(program: &str, args: Vec<&str>) -> String {
-    let output = CommandAsync::new(program).args(args).output().await;
-    get_stdout(&output.unwrap())
-}
-
-pub async fn run_git_async(args: Vec<&str>) -> String {
-    run_command_async("git", args).await
+    run_command("git", args)
 }
