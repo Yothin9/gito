@@ -21,9 +21,10 @@ pub mod del {
 
 pub mod list {
     use crate::utils::safe_get_git_account;
-    use prettytable::{row, Cell, Row, Table};
+    use gito_core::GitInfo;
+    use prettytable::{color, row, Attr, Cell, Row, Table};
     use std::vec;
-    pub fn run() {
+    pub fn run(git_info: &GitInfo) {
         let mut git_account_table = Table::new();
         git_account_table.add_row(row!["alias", "name", "email"]);
         let i = safe_get_git_account();
@@ -33,9 +34,14 @@ pub mod list {
             for (_, v) in prop.iter() {
                 group.push(Cell::new(v));
             }
+
+            if group[1].get_content() == git_info.username {
+                for cell in group.iter_mut() {
+                    cell.style(Attr::ForegroundColor(color::GREEN))
+                }
+            }
             git_account_table.add_row(Row::new(group));
         }
-        // TODO: mark current user
         git_account_table.printstd();
     }
 }

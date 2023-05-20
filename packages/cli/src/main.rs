@@ -79,7 +79,7 @@ async fn main() {
         }
         Commands::User(user) => match user.command {
             UserCmd::List => {
-                user_command::list::run();
+                user_command::list::run(&git_info);
             }
             UserCmd::Add { alias, name, email } => {
                 user_command::add::run(&alias, &name, &email);
