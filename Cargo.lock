@@ -390,11 +390,11 @@ dependencies = [
 
 [[package]]
 name = "gito"
-version = "0.2.5"
+version = "0.2.6"
 dependencies = [
  "clap",
  "colored",
- "gito_core",
+ "gito_core 1.0.0",
  "home",
  "prettytable",
  "regex",
@@ -407,6 +407,17 @@ dependencies = [
 [[package]]
 name = "gito_core"
 version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5508833479cd58884527e6a6ca64b967ea4a2ab2ca7dea9836876857dec2bf64"
+dependencies = [
+ "console_error_panic_hook",
+ "regex",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "gito_core"
+version = "1.0.1"
 dependencies = [
  "console_error_panic_hook",
  "regex",
