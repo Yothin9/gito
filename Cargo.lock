@@ -394,7 +394,7 @@ version = "0.2.6"
 dependencies = [
  "clap",
  "colored",
- "gito_core 1.0.0",
+ "gito_core 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "home",
  "prettytable",
  "regex",
@@ -406,17 +406,6 @@ dependencies = [
 
 [[package]]
 name = "gito_core"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5508833479cd58884527e6a6ca64b967ea4a2ab2ca7dea9836876857dec2bf64"
-dependencies = [
- "console_error_panic_hook",
- "regex",
- "wasm-bindgen",
-]
-
-[[package]]
-name = "gito_core"
 version = "1.0.1"
 dependencies = [
  "console_error_panic_hook",
@@ -424,6 +413,17 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-test",
  "wee_alloc",
+]
+
+[[package]]
+name = "gito_core"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2c03c40e599fc1bf285475c157d79f1e17141e243fb597a21deed5171f452178"
+dependencies = [
+ "console_error_panic_hook",
+ "regex",
+ "wasm-bindgen",
 ]
 
 [[package]]
