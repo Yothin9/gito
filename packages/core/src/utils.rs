@@ -12,7 +12,7 @@ pub fn get_stdout(output: &Output) -> String {
  */
 pub fn get_user_repo(remote_url: &str) -> String {
     // r means raw string https://doc.rust-lang.org/stable/reference/tokens.html#raw-string-literals
-    let re: Regex = Regex::new(r"^git@github\.com:(.*)\.git$").unwrap();
+    let re: Regex = Regex::new(r"^git@.*\.com:(.*)\.git$").unwrap();
     let caps = re.captures(remote_url).unwrap();
     return caps[1].to_string();
 }
