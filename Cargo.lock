@@ -378,7 +378,7 @@ version = "0.2.6"
 dependencies = [
  "clap",
  "colored",
- "gito_core",
+ "gito_core 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "home",
  "prettytable",
  "regex",
@@ -391,6 +391,15 @@ dependencies = [
 [[package]]
 name = "gito_core"
 version = "1.0.2"
+dependencies = [
+ "regex",
+]
+
+[[package]]
+name = "gito_core"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3edf3561ef551cc0df9386ab7e2ed6d76e2c44eb3f658710a8fc45258c3dd71f"
 dependencies = [
  "regex",
 ]
