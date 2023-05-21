@@ -73,6 +73,7 @@ enum UserCmd {
 async fn main() {
     let git_info = get_git_info();
     let args = Cli::parse();
+    
     match args.command {
         Commands::GetUpstream { remote_name } => {
             get_upstream::run(&remote_name, &git_info).await;

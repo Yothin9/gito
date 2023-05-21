@@ -1,34 +1,29 @@
 pub mod utils;
+
+use core::prelude;
+
 pub use utils::*;
 
-use wasm_bindgen::prelude::*;
-
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
-#[cfg(feature = "wee_alloc")]
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-#[wasm_bindgen(getter_with_clone)]
-#[allow(dead_code)]
 #[derive(Debug)]
 pub struct GitInfo {
     pub username: String,
     pub email: String,
     pub ssh_url: String,
     pub user_repo: String,
+    pub current_branch: String,
 }
 
-#[wasm_bindgen]
 pub fn get_git_info() -> GitInfo {
     let ssh_url = get_stdout(&run_git(vec!["config", "remote.origin.url"]));
     let username = get_stdout(&run_git(vec!["config", "user.name"]));
     let email = get_stdout(&run_git(vec!["config", "user.email"]));
+    let current_branch = get_stdout(&run_git(vec!["rev-parse", "--abbrev-ref", "HEAD"]));
 
-    println!("{}", ssh_url);
     GitInfo {
         user_repo: get_user_repo(&ssh_url),
         ssh_url,
         username,
         email,
+        current_branch,
     }
 }
