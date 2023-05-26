@@ -18,7 +18,7 @@ env:
   pull_request: null
 defaults:
   run:
-    working-directory: ./packages/core
+    working-directory: packages/core
 jobs:
   build:
     strategy:
