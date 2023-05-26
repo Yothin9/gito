@@ -15,8 +15,10 @@ env:
       - '**/*.gitignore'
       - .editorconfig
       - docs/**
-      - './packages/cli/**'
   pull_request: null
+defaults:
+  run:
+    working-directory: ./packages/core
 jobs:
   build:
     strategy:
