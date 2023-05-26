@@ -15,6 +15,7 @@
   "engines": {
     "node": ">= 10"
   },
+  "repository": "git@github.com:HomyeeKing/gito.git",
   "libc": [
     "glibc"
   ]
