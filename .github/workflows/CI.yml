@@ -16,9 +16,7 @@ env:
       - .editorconfig
       - docs/**
   pull_request: null
-defaults:
-  run:
-    working-directory: packages/core
+  
 jobs:
   build:
     strategy:
