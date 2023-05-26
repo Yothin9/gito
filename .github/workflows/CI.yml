@@ -48,6 +48,7 @@ jobs:
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
         with:
+          path: 'packages/core'
           node-version: 18
           check-latest: true
           cache: yarn
