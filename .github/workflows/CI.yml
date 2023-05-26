@@ -43,12 +43,13 @@ jobs:
     name: stable - ${{ matrix.settings.target }} - node@18
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Change working directory
+        working-directory: packages/core
+        run: echo "Changed working directory to packages/core"
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
         with:
-          path: 'packages/core'
           node-version: 18
           check-latest: true
           cache: yarn
