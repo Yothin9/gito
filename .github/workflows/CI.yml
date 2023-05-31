@@ -42,8 +42,10 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - name: Change working directory
-        working-directory: ../packages/core
-        run: echo "Changed working directory to packages/core"
+        working-directory: $GITHUB_WORKSPACE/gito/packages/core
+        run: |
+         echo "Changed working directory to packages/core"
+         echo $GITHUB_WORKSPACE
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
