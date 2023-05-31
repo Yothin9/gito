@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Change working directory
         run: |
-         echo $GITHUB_WORKSPACE
+         ls -R .
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
