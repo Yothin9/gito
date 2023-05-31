@@ -17,6 +17,10 @@ env:
       - docs/**
   pull_request: null
 
+defaults:
+  run:
+    working-directory: ./packages/core
+
 jobs:
   build:
     strategy:
@@ -41,7 +45,6 @@ jobs:
     name: stable - ${{ matrix.settings.target }} - node@18
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v3
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
