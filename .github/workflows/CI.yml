@@ -42,7 +42,7 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - name: Change working directory
-        working-directory: packages/core
+        working-directory: ../packages/core
         run: echo "Changed working directory to packages/core"
       - name: Setup node
         uses: actions/setup-node@v3
