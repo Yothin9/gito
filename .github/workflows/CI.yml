@@ -16,7 +16,7 @@ env:
       - .editorconfig
       - docs/**
   pull_request: null
-  
+
 jobs:
   build:
     strategy:
@@ -41,9 +41,6 @@ jobs:
     name: stable - ${{ matrix.settings.target }} - node@18
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - name: Change working directory
-        run: |
-         ls -a .
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
