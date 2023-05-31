@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Change working directory
         run: |
-         ls -R .
+         ls -a .
       - name: Setup node
         uses: actions/setup-node@v3
         if: ${{ !matrix.settings.docker }}
